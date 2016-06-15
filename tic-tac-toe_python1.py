@@ -29,10 +29,13 @@ O_TURN = 1
 
         
 def draw_board():
-    for thing in board:
-        print thing
+    """Print the tic tac toe board"""
+    for string in board:
+        print string
+
 
 def getLocation(turn):
+    """Prompt the player for a location, then return the location"""
     location = ""
     if turn == X_TURN:
         location = str(raw_input("Place X: ")).upper()
@@ -42,39 +45,51 @@ def getLocation(turn):
     print ""  
     return location
 
+
 def makeList(string):
+    """The split() method isn't working well, so I created a method to break a string into a character list"""
     lst = list()
     for letter in string:
         lst.append(letter)
     return lst
 
+
 def placeStringInLocation(string, location):
+    """Insert a string to the given location on the game board"""
     str_index = {"A": 1, "B" : 3, "C" : 5}.get(location[0])
     board_index = {"1" : 1, "2" : 3, "3" : 5}.get(location[1])
     board_string_list = makeList(board[board_index])
     board_string_list[str_index] = string
     board[board_index] = "".join(board_string_list)
-    
+  
+  
 def checkForWin():
+    "Check to see if the game ended in a victory or if the players tied"""
+    
+    #check to see if the same string appears three times in a win combo.
     for combo in win_combos:
         string = game_dict[combo[0]]
+
         if string == "":
             continue
+
         for position in combo:
             if string != game_dict[position]:
-                break
-                
+                break        
         else:
-            return string + "'s wins!"
-        
+            return string + "'s wins!" #return who wins
+    
+    #check to see if every value in the game dict is filled. If it is then the game is tied.
     for value in game_dict.values():
         if value == "":
             break
     else:
         return "Tie game"
-                
+    
+    #if the game is 't over return nothing          
     return None
-            
+ 
+           
        
 def main():
     
@@ -88,6 +103,7 @@ def main():
               
         valid = False
         empty = False
+
         #keep looping until the user puts in valid input
         while not valid and not empty:
             try:
@@ -120,6 +136,7 @@ def main():
             turn = O_TURN
         elif turn == O_TURN :
             turn = X_TURN
-               
-            
-main()
+ 
+              
+if __name__ == "__main__":           
+    main()
